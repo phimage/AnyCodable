@@ -71,6 +71,8 @@ extension _AnyDecodable {
             self.init(array.map { $0.value })
         } else if let dictionary = try? container.decode([String: AnyCodable].self) {
             self.init(dictionary.mapValues { $0.value })
+        } else if let codable = try? container.decode(AnyCodable.self) {
+            self.init(codable.value)
         } else {
             throw DecodingError.dataCorruptedError(in: container, debugDescription: "AnyCodable value cannot be decoded")
         }
